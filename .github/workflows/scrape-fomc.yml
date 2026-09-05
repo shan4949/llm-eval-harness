@@ -3,7 +3,10 @@ name: Scrape FOMC Statements
 on:
   schedule:
     - cron: "0 9 1 * *"   # 9am UTC on the 1st of every month
-  workflow_dispatch:       # also lets you trigger it manually from GitHub
+  workflow_dispatch:       # lets you trigger it manually from GitHub
+
+permissions:
+  contents: write          # needed so the job can git push new files back
 
 jobs:
   scrape:
@@ -20,7 +23,7 @@ jobs:
 
       - name: Run scraper
         run: python scripts/scrape_fomc.py
-        
+
       - name: Commit new files
         run: |
           git config user.name "github-actions"
