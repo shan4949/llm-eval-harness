@@ -1,0 +1,30 @@
+name: Scrape FOMC Statements
+
+on:
+  schedule:
+    - cron: "0 9 1 * *"   # 9am UTC on the 1st of every month
+  workflow_dispatch:       # also lets you trigger it manually from GitHub
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install httpx beautifulsoup4
+
+      - name: Run scraper
+        run: python scripts/scrape_fomc.py
+        
+      - name: Commit new files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add sut/data/
+          git diff --staged --quiet || git commit -m "chore: add new FOMC statements"
+          git push
