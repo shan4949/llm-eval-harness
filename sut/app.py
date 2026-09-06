@@ -17,6 +17,12 @@ class QueryRequest(BaseModel):
     question: str
     top_k: int = 3
 
+    def model_post_init(self, _context: object) -> None:
+        if len(self.question) > 2000:
+            raise ValueError("question must be <= 2000 characters")
+        if not 1 <= self.top_k <= 10:
+            raise ValueError("top_k must be between 1 and 10")
+
 
 @app.post("/query")
 def query(req: QueryRequest) -> dict:
