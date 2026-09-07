@@ -1,0 +1,107 @@
+name: Scheduled Eval
+
+on:
+  schedule:
+    - cron: '0 8 */3 * *'  # every 3 days at 08:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: evalharness
+          POSTGRES_USER: eval
+          POSTGRES_PASSWORD: eval
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://eval:eval@localhost:5432/evalharness
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - uses: actions/setup-python@v5.3.0
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Apply schema
+        run: psql "$DATABASE_URL" -f evalharness/storage/schema.sql
+
+      - name: Index FOMC documents
+        run: python -c "from sut.retriever import Retriever; r = Retriever(); r.index()"
+
+      - name: Start SUT
+        run: uvicorn sut.app:app --port 8000 &
+      - run: sleep 3
+
+      - name: Run eval (no judge — keeps cost near zero)
+        run: evalharness run --eval-set golden_qa --no-judge
+
+      - name: Export metrics to JSON
+        run: |
+          mkdir -p reports
+          python - <<'EOF'
+          import json
+          from datetime import date
+          from sqlalchemy import text
+          from evalharness.storage.db import get_session
+
+          with get_session() as s:
+              run_id = s.execute(
+                  text("SELECT run_id FROM eval_runs ORDER BY run_id DESC LIMIT 1")
+              ).scalar()
+              rows = s.execute(text("""
+                  SELECT metric_name,
+                         COUNT(*) FILTER (WHERE passed) AS passed,
+                         COUNT(*)                        AS total,
+                         ROUND(AVG(score)::numeric, 3)  AS avg_score
+                  FROM eval_scores es
+                  JOIN eval_results er ON es.result_id = er.result_id
+                  WHERE er.run_id = :run_id
+                  GROUP BY metric_name
+                  ORDER BY metric_name
+              """), {"run_id": run_id}).fetchall()
+
+          report = {
+              "date": str(date.today()),
+              "run_id": run_id,
+              "metrics": [
+                  {
+                      "name": r[0],
+                      "passed": r[1],
+                      "total": r[2],
+                      "pass_rate": round(r[1] / r[2], 3),
+                      "avg_score": float(r[3]),
+                  }
+                  for r in rows
+              ],
+          }
+          out = f"reports/{date.today()}.json"
+          with open(out, "w") as f:
+              json.dump(report, f, indent=2)
+          print(json.dumps(report, indent=2))
+          EOF
+
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          git diff --cached --quiet || git commit -m "chore: scheduled eval report $(date +%Y-%m-%d)"
+          git push
