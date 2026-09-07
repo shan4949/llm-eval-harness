@@ -1,0 +1,436 @@
+# Golden QA test set for FOMC RAG pipeline
+# Format:
+#   id: unique identifier
+#   question: what we ask the SUT
+#   expected: what a correct answer contains (used by evaluators)
+#   keywords: list of terms that must appear in a passing answer
+#   expected_idk: true if the correct answer is "I don't know" (out-of-corpus)
+#   tags: for filtering/grouping
+#   source: which FOMC file contains the answer
+
+# ── Rate decisions ────────────────────────────────────────────────────────────
+
+- id: rate_2022_01_hold
+  question: "What was the federal funds rate target range in January 2022?"
+  expected: "0 to 1/4 percent"
+  keywords: ["0", "1/4"]
+  tags: [rate_decision, 2022, hold]
+  source: fomc_2022_01
+
+- id: rate_2022_03_hike
+  question: "What did the Fed decide at the March 2022 meeting?"
+  expected: "raise the target range for the federal funds rate to 1/4 to 1/2 percent"
+  keywords: ["1/4", "1/2"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_03
+
+- id: rate_2022_05_hike
+  question: "What was the federal funds rate after the May 2022 FOMC meeting?"
+  expected: "3/4 to 1 percent"
+  keywords: ["3/4", "1 percent"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_05
+
+- id: rate_2022_06_hike
+  question: "What did the Fed do at the June 2022 meeting?"
+  expected: "raise the target range for the federal funds rate to 1-1/2 to 1-3/4 percent"
+  keywords: ["1-1/2", "1-3/4"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_06
+
+- id: rate_2022_07_hike
+  question: "What was the federal funds rate target range set to at the July 2022 FOMC meeting?"
+  expected: "2-1/4 to 2-1/2 percent"
+  keywords: ["2-1/4", "2-1/2"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_07
+
+- id: rate_2022_09_hike
+  question: "What was the fed funds rate after September 2022?"
+  expected: "3 to 3-1/4 percent"
+  keywords: ["3", "3-1/4"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_09
+
+- id: rate_2022_11_hike
+  question: "What did the FOMC decide at the November 2022 meeting?"
+  expected: "raise the target range for the federal funds rate to 3-3/4 to 4 percent"
+  keywords: ["3-3/4", "4 percent"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_11
+
+- id: rate_2022_12_hike
+  question: "What was the federal funds rate target range after the December 2022 meeting?"
+  expected: "4-1/4 to 4-1/2 percent"
+  keywords: ["4-1/4", "4-1/2"]
+  tags: [rate_decision, 2022, hike]
+  source: fomc_2022_12
+
+- id: rate_2023_02_hike
+  question: "What rate did the Fed set in February 2023?"
+  expected: "4-1/2 to 4-3/4 percent"
+  keywords: ["4-1/2", "4-3/4"]
+  tags: [rate_decision, 2023, hike]
+  source: fomc_2023_02
+
+- id: rate_2023_03_hike
+  question: "What was the federal funds rate after the March 2023 FOMC meeting?"
+  expected: "4-3/4 to 5 percent"
+  keywords: ["4-3/4", "5 percent"]
+  tags: [rate_decision, 2023, hike]
+  source: fomc_2023_03
+
+- id: rate_2023_05_hike
+  question: "What was the FOMC's rate decision in May 2023?"
+  expected: "raise the target range for the federal funds rate to 5 to 5-1/4 percent"
+  keywords: ["5", "5-1/4"]
+  tags: [rate_decision, 2023, hike]
+  source: fomc_2023_05
+
+- id: rate_2023_07_hike
+  question: "What was the federal funds rate after July 2023?"
+  expected: "5-1/4 to 5-1/2 percent"
+  keywords: ["5-1/4", "5-1/2"]
+  tags: [rate_decision, 2023, hike]
+  source: fomc_2023_07
+
+- id: rate_2023_11_hold
+  question: "Did the Fed raise rates at the November 2023 meeting?"
+  expected: "maintain the target range for the federal funds rate at 5-1/4 to 5-1/2 percent"
+  keywords: ["maintain", "5-1/4", "5-1/2"]
+  tags: [rate_decision, 2023, hold]
+  source: fomc_2023_11
+
+- id: rate_2023_12_hold
+  question: "What was the federal funds rate target range in December 2023?"
+  expected: "5-1/4 to 5-1/2 percent"
+  keywords: ["5-1/4", "5-1/2"]
+  tags: [rate_decision, 2023, hold]
+  source: fomc_2023_12
+
+- id: rate_2024_01_hold
+  question: "What was the FOMC's rate decision in January 2024?"
+  expected: "maintain the target range for the federal funds rate at 5-1/4 to 5-1/2 percent"
+  keywords: ["maintain", "5-1/4", "5-1/2"]
+  tags: [rate_decision, 2024, hold]
+  source: fomc_2024_01
+
+- id: rate_2024_09_cut
+  question: "What did the Fed do at the September 2024 meeting?"
+  expected: "lower the target range for the federal funds rate by 1/2 percentage point to 4-3/4 to 5 percent"
+  keywords: ["lower", "4-3/4", "5 percent"]
+  tags: [rate_decision, 2024, cut]
+  source: fomc_2024_09
+
+- id: rate_2024_11_cut
+  question: "What was the rate decision at the November 2024 FOMC meeting?"
+  expected: "lower the target range for the federal funds rate by 1/4 percentage point to 4-1/2 to 4-3/4 percent"
+  keywords: ["lower", "4-1/2", "4-3/4"]
+  tags: [rate_decision, 2024, cut]
+  source: fomc_2024_11
+
+- id: rate_2024_12_cut
+  question: "What was the federal funds rate after the December 2024 FOMC meeting?"
+  expected: "4-1/4 to 4-1/2 percent"
+  keywords: ["4-1/4", "4-1/2"]
+  tags: [rate_decision, 2024, cut]
+  source: fomc_2024_12
+
+- id: rate_2025_01_hold
+  question: "What did the FOMC decide at the January 2025 meeting?"
+  expected: "maintain the target range for the federal funds rate at 4-1/4 to 4-1/2 percent"
+  keywords: ["maintain", "4-1/4", "4-1/2"]
+  tags: [rate_decision, 2025, hold]
+  source: fomc_2025_01
+
+- id: rate_2025_09_cut
+  question: "What was the rate decision at the September 2025 FOMC meeting?"
+  expected: "lower the target range for the federal funds rate by 1/4 percentage point to 4 to 4-1/4 percent"
+  keywords: ["lower", "4 to 4-1/4"]
+  tags: [rate_decision, 2025, cut]
+  source: fomc_2025_09
+
+- id: rate_2026_01_hold
+  question: "What was the federal funds rate in January 2026?"
+  expected: "3-1/2 to 3-3/4 percent"
+  keywords: ["3-1/2", "3-3/4"]
+  tags: [rate_decision, 2026, hold]
+  source: fomc_2026_01
+
+- id: rate_2026_06_hold
+  question: "What did the FOMC decide in June 2026?"
+  expected: "maintain the target range for the federal funds rate at 3-1/2 to 3-3/4 percent"
+  keywords: ["maintain", "3-1/2", "3-3/4"]
+  tags: [rate_decision, 2026, hold]
+  source: fomc_2026_06
+
+- id: rate_2026_07_hold
+  question: "What was the FOMC's rate decision in July 2026?"
+  expected: "maintain the target range for the federal funds rate at 3-1/2 to 3-3/4 percent"
+  keywords: ["maintain", "3-1/2", "3-3/4"]
+  tags: [rate_decision, 2026, hold]
+  source: fomc_2026_07
+
+# ── Dissents and votes ────────────────────────────────────────────────────────
+
+- id: dissent_2022_03_bullard
+  question: "Who dissented at the March 2022 FOMC meeting and what did they prefer?"
+  expected: "James Bullard, who preferred at this meeting to raise the target range for the federal funds rate by 0.5 percentage point"
+  keywords: ["Bullard", "0.5"]
+  tags: [dissent, 2022]
+  source: fomc_2022_03
+
+- id: dissent_2022_06_george
+  question: "Who voted against the June 2022 rate decision?"
+  expected: "Esther L. George, who preferred at this meeting to raise the target range for the federal funds rate by 0.5 percentage point"
+  keywords: ["George", "0.5"]
+  tags: [dissent, 2022]
+  source: fomc_2022_06
+
+- id: dissent_2024_09_bowman
+  question: "Who dissented at the September 2024 FOMC meeting?"
+  expected: "Michelle W. Bowman, who preferred to lower the target range for the federal funds rate by 1/4 percentage point"
+  keywords: ["Bowman", "1/4"]
+  tags: [dissent, 2024]
+  source: fomc_2024_09
+
+- id: dissent_2024_12_hammack
+  question: "Who voted against the December 2024 FOMC decision?"
+  expected: "Beth M. Hammack, who preferred to maintain the target range"
+  keywords: ["Hammack", "maintain"]
+  tags: [dissent, 2024]
+  source: fomc_2024_12
+
+- id: dissent_2026_01_miran_waller
+  question: "Who dissented at the January 2026 FOMC meeting?"
+  expected: "Stephen I. Miran and Christopher J. Waller, who preferred to lower the target range"
+  keywords: ["Miran", "Waller", "lower"]
+  tags: [dissent, 2026]
+  source: fomc_2026_01
+
+- id: dissent_2026_07_three
+  question: "How many members dissented at the July 2026 FOMC meeting and who were they?"
+  expected: "Beth M. Hammack, Neel Kashkari, and Lorie K. Logan, who preferred to raise"
+  keywords: ["Hammack", "Kashkari", "Logan", "raise"]
+  tags: [dissent, 2026]
+  source: fomc_2026_07
+
+- id: vote_2026_06_unanimous
+  question: "Was the June 2026 FOMC vote unanimous?"
+  expected: "12 – 0 vote"
+  keywords: ["12", "0"]
+  tags: [vote, 2026]
+  source: fomc_2026_06
+
+- id: vote_2026_07_count
+  question: "What was the vote tally at the July 2026 FOMC meeting?"
+  expected: "9 – 3 vote"
+  keywords: ["9", "3"]
+  tags: [vote, 2026]
+  source: fomc_2026_07
+
+- id: dissent_2025_07_bowman_waller
+  question: "Who dissented at the July 2025 FOMC meeting?"
+  expected: "Michelle W. Bowman and Christopher J. Waller, who preferred to lower the target range"
+  keywords: ["Bowman", "Waller", "lower"]
+  tags: [dissent, 2025]
+  source: fomc_2025_07
+
+- id: dissent_2025_09_miran
+  question: "Who dissented at the September 2025 FOMC meeting?"
+  expected: "Stephen I. Miran, who preferred to lower the target range for the federal funds rate by 1/2 percentage point"
+  keywords: ["Miran", "1/2"]
+  tags: [dissent, 2025]
+  source: fomc_2025_09
+
+# ── Economic conditions ───────────────────────────────────────────────────────
+
+- id: econ_2022_03_russia
+  question: "What geopolitical event did the March 2022 FOMC statement mention?"
+  expected: "invasion of Ukraine by Russia"
+  keywords: ["Ukraine", "Russia", "invasion"]
+  tags: [economic_conditions, geopolitics, 2022]
+  source: fomc_2022_03
+
+- id: econ_2023_03_banking
+  question: "What did the March 2023 FOMC statement say about the banking system?"
+  expected: "U.S. banking system is sound and resilient"
+  keywords: ["banking", "sound", "resilient"]
+  tags: [economic_conditions, banking, 2023]
+  source: fomc_2023_03
+
+- id: econ_2023_05_banking
+  question: "What did the FOMC say about U.S. banks in May 2023?"
+  expected: "U.S. banking system is sound and resilient"
+  keywords: ["banking", "sound", "resilient"]
+  tags: [economic_conditions, banking, 2023]
+  source: fomc_2023_05
+
+- id: econ_2024_09_inflation_progress
+  question: "What did the September 2024 FOMC statement say about inflation progress?"
+  expected: "gained greater confidence that inflation is moving sustainably toward 2 percent"
+  keywords: ["confidence", "inflation", "sustainably", "2 percent"]
+  tags: [economic_conditions, inflation, 2024]
+  source: fomc_2024_09
+
+- id: econ_2022_07_spending
+  question: "What did the July 2022 FOMC statement say about economic activity?"
+  expected: "indicators of spending and production have softened"
+  keywords: ["spending", "production", "softened"]
+  tags: [economic_conditions, 2022]
+  source: fomc_2022_07
+
+- id: econ_2026_07_middle_east
+  question: "What geopolitical situation did the July 2026 FOMC statement mention?"
+  expected: "conflict in the Middle East"
+  keywords: ["Middle East", "conflict"]
+  tags: [economic_conditions, geopolitics, 2026]
+  source: fomc_2026_07
+
+- id: econ_2025_03_qt_slowdown
+  question: "What did the FOMC announce about its balance sheet in March 2025?"
+  expected: "slow the pace of decline of its securities holdings by reducing the monthly redemption cap on Treasury securities from $25 billion to $5 billion"
+  keywords: ["$25 billion", "$5 billion", "Treasury"]
+  tags: [balance_sheet, qt, 2025]
+  source: fomc_2025_03
+
+- id: econ_2026_07_productivity
+  question: "How did the July 2026 statement describe productivity?"
+  expected: "Productivity growth and capital investment are strong"
+  keywords: ["Productivity", "capital investment", "strong"]
+  tags: [economic_conditions, 2026]
+  source: fomc_2026_07
+
+- id: econ_dual_mandate
+  question: "What are the Fed's two goals as stated in the FOMC statements?"
+  expected: "maximum employment and inflation at the rate of 2 percent"
+  keywords: ["maximum employment", "2 percent", "inflation"]
+  tags: [policy, mandate]
+  source: fomc_2022_03
+
+- id: econ_2026_06_middle_east
+  question: "What did the June 2026 FOMC statement say about uncertainty?"
+  expected: "elevated uncertainty that owes, in part, to the conflict in the Middle East"
+  keywords: ["uncertainty", "Middle East"]
+  tags: [economic_conditions, 2026]
+  source: fomc_2026_06
+
+# ── Policy language ───────────────────────────────────────────────────────────
+
+- id: policy_2024_09_balance_risks
+  question: "How did the September 2024 FOMC describe the balance of risks?"
+  expected: "risks to achieving its employment and inflation goals are roughly in balance"
+  keywords: ["risks", "employment", "inflation", "balance"]
+  tags: [policy_language, 2024]
+  source: fomc_2024_09
+
+- id: policy_2024_01_no_cut_condition
+  question: "What condition did the Fed set before cutting rates as stated in January 2024?"
+  expected: "does not expect it will be appropriate to reduce the target range until it has gained greater confidence that inflation is moving sustainably toward 2 percent"
+  keywords: ["confidence", "inflation", "sustainably", "2 percent"]
+  tags: [policy_language, 2024]
+  source: fomc_2024_01
+
+- id: policy_2023_03_firming
+  question: "What language did the March 2023 FOMC use about future rate increases?"
+  expected: "some additional policy firming may be appropriate"
+  keywords: ["firming", "appropriate"]
+  tags: [policy_language, 2023]
+  source: fomc_2023_03
+
+- id: policy_2022_12_restrictive
+  question: "What phrase did the FOMC use in late 2022 to describe its desired policy stance?"
+  expected: "sufficiently restrictive to return inflation to 2 percent"
+  keywords: ["sufficiently restrictive", "2 percent"]
+  tags: [policy_language, 2022]
+  source: fomc_2022_12
+
+- id: policy_2025_09_downside_employment
+  question: "What risk did the September 2025 FOMC statement highlight?"
+  expected: "downside risks to employment have risen"
+  keywords: ["downside risks", "employment"]
+  tags: [policy_language, 2025]
+  source: fomc_2025_09
+
+- id: policy_2025_01_uncertainty
+  question: "How did the January 2025 FOMC statement characterize the economic outlook?"
+  expected: "economic outlook is uncertain"
+  keywords: ["uncertain", "outlook"]
+  tags: [policy_language, 2025]
+  source: fomc_2025_01
+
+- id: policy_2022_05_qt_start
+  question: "When did the Fed begin reducing its balance sheet according to the May 2022 statement?"
+  expected: "begin reducing its holdings of Treasury securities and agency debt and agency mortgage-backed securities on June 1"
+  keywords: ["June 1", "reducing", "holdings"]
+  tags: [balance_sheet, qt, 2022]
+  source: fomc_2022_05
+
+- id: policy_2026_07_price_stability
+  question: "What commitment did the July 2026 FOMC statement make about inflation?"
+  expected: "The Committee will deliver price stability"
+  keywords: ["price stability"]
+  tags: [policy_language, 2026]
+  source: fomc_2026_07
+
+# ── Out-of-corpus (should answer "I don't know") ──────────────────────────────
+
+- id: idk_pre_2022
+  question: "What was the federal funds rate in March 2020?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus]
+
+- id: idk_fomc_chair_personal
+  question: "What is Jerome Powell's home address?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, personal]
+
+- id: idk_unrelated_topic
+  question: "What is the GDP of China in 2023?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, unrelated]
+
+- id: idk_future_rate
+  question: "What will the federal funds rate be in 2030?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, future]
+
+- id: idk_stock_market
+  question: "What was the S&P 500 level when the Fed raised rates in June 2022?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, market]
+
+- id: idk_cpi_number
+  question: "What was the CPI inflation reading in July 2022?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, inflation_data]
+
+- id: idk_ecb_policy
+  question: "What did the European Central Bank decide at its June 2022 meeting?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, international]
+
+- id: idk_unemployment_number
+  question: "What was the exact unemployment rate in September 2023?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, labor_market]
+
+- id: idk_fed_budget
+  question: "What is the Federal Reserve's annual operating budget?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, institutional]
+
+- id: idk_personal_net_worth
+  question: "What is the net worth of FOMC members?"
+  expected: "I don't know"
+  expected_idk: true
+  tags: [out_of_corpus, personal]
