@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-10",
+  "run_id": 1,
+  "metrics": [
+    {
+      "name": "idk_check",
+      "passed": 51,
+      "total": 61,
+      "pass_rate": 0.836,
+      "avg_score": 0.836
+    },
+    {
+      "name": "keyword_match",
+      "passed": 10,
+      "total": 61,
+      "pass_rate": 0.164,
+      "avg_score": 0.189
+    },
+    {
+      "name": "latency_ok",
+      "passed": 61,
+      "total": 61,
+      "pass_rate": 1.0,
+      "avg_score": 1.0
+    }
+  ]
+}
